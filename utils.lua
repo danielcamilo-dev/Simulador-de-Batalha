@@ -31,7 +31,7 @@ function utils.printHeader()
 =========================================================================================================
                                         Let's go to battle!
                                   ------------------------------
-                                            Welcome
+                                              Welcome
 ]])
 end
 --- Printa os valores de algum atributo e reuslta em uma string

@@ -5,9 +5,22 @@ local utils = require("utils")
 utils.enableUTF8()
 utils.printHeader()
 
-print(string.format("A vida do jogador e %d/%d", player.health, player.maxHealth))
-print(string.format(kraken.description))
-
 local boss = kraken
 
 utils.creatureStatus(boss)
+
+-- iniciar o loop
+while true do
+
+    -- escolha de ação do jogador
+    -- ainda não implementado
+    if boss.health <= 0 then
+        break -- Encerramento do loop caso o boss morra
+    end
+
+    -- escolha de ação do boss
+    -- ainda não implementado
+    if player.health <= 0 then
+        break -- Encerramento do loop caso o jogador morra
+    end
+end
