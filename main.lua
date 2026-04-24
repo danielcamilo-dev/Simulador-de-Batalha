@@ -24,3 +24,4 @@ while true do
         break -- Encerramento do loop caso o jogador morra
     end
 end
+
