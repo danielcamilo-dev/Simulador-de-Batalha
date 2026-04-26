@@ -56,7 +56,6 @@ end
 ---@param creature table
 ---
 function utils.creatureStatus(creature)
-    
     local healthRate = math.floor((creature.health / creature.maxHealth) * 10)
 
     print("================================")
@@ -69,6 +68,14 @@ function utils.creatureStatus(creature)
     print("| Defesa: " .. utils.getProgessbar(creature.defense))
     print("| Velocidade: " .. utils.getProgessbar(creature.speed))
     print("| Ataque: " .. utils.getProgessbar(creature.attack))
+end
+
+--- Pergunta ao jogador qual ação ele deseja executar em numero e retorna a resposta
+--- @return number
+function utils.ask()
+    io.write("> ")
+    local answer = io.read("*n")
+    return answer
 end
 
 return utils

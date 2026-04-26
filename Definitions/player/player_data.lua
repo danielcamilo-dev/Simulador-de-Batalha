@@ -3,7 +3,7 @@ local player_data = {
     health = 10,
     attack = 4,
     defense = 2,
-    speed = 3,
+    speed = 9,
     potions = 2
 }
 
