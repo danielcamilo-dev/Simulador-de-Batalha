@@ -1,23 +1,26 @@
 local player = require("Definitions.player.player_data")
 local kraken = require("Definitions.Creaturas.kraken_data")
 local utils = require("utils")
-local actions = require("Definitions.player.actions")
+local playerActions = require("Definitions.player.actions")
+local krakenActions = require("Definitions.Creaturas.krakenActions")
 
 utils.enableUTF8()
 utils.printHeader()
 
 local creature = kraken
-
+local creatureActions = krakenActions
 
 utils.creatureStatus(creature)
 
-actions.build()
+playerActions.build()
+krakenActions.build()
+
 -- iniciar o loop
 while true do
     print()
     print("Escolha uma ação:")
     -- pegando apenas o que o jogador pode fazer
-    local validPlayerActions = actions.getValidActions(player, creature)
+    local validPlayerActions = playerActions.getValidActions(player, creature)
     
     -- listando as ações validas para o jogador escolher
     for i, action in pairs(validPlayerActions) do
@@ -35,13 +38,17 @@ while true do
         print("Ação inválida. Você perdeu a vez.")
     end
 
-    -- escolha de ação do jogador
-    -- ainda não implementado
     if creature.health <= 0 then
         break -- Encerramento do loop caso a creatura morra
     end
-    -- escolha de ação da creatura
-    -- ainda não implementado
+
+    print()
+    local validBossActions = krakenActions.getValidActions(player, creature)
+    local bossChosenAction = validBossActions[math.random(#validBossActions)]
+
+    print(string.format("A criatura escolheu: %s", bossChosenAction.description))
+    bossChosenAction.execute(player, creature)
+
     if player.health <= 0 then
         break -- Encerramento do loop caso o jogador morra
     end

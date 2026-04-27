@@ -1,4 +1,5 @@
 local player_data = {
+    name = "Robin",
     maxHealth = 10,
     health = 10,
     attack = 4,

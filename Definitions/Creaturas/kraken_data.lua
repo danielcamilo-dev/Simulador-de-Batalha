@@ -1,8 +1,8 @@
 local kraken_data = {
     name = "Kraken",
-    maxHealth = 100,
-    health = 100,
-    speed = 0,
+    maxHealth = 50,
+    health = 50,
+    speed = 1,
     defense = 10,
     attack = 5
 }
