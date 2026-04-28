@@ -68,6 +68,7 @@ function utils.creatureStatus(creature)
     print("| Defesa: " .. utils.getProgessbar(creature.defense))
     print("| Velocidade: " .. utils.getProgessbar(creature.speed))
     print("| Ataque: " .. utils.getProgessbar(creature.attack))
+     print("================================")
 end
 
 --- Pergunta ao jogador qual ação ele deseja executar em numero e retorna a resposta

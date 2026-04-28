@@ -1,4 +1,5 @@
 local utils = require("utils")
+local actions = require("Definitions.player.actions")
 local krakenActions = {}
 
 krakenActions.list = {}
@@ -14,6 +15,8 @@ function krakenActions.build()
             requirement = nil,
 
             execute = function (playerData, creatureData)
+
+                -- Se e a vez do kraken ele vai usar o ataque
                 
                 -- Calcular a chance da porcentagem de sucesso com base na velocidade do jogador e do boss
                 local sucessChance = creatureData.speed == 0 and 1 or creatureData.speed / playerData.speed              
@@ -25,18 +28,23 @@ function krakenActions.build()
                 -- Garante que o damage vai ser 1 ou mais
                 local damage = math.max(1, math.ceil(damageRaw))
 
-                local healthRate = math.floor((playerData.health / playerData.maxHealth) * 10)
-
                 -- se for veridadeiro fassa
                 if sucess then
-
-                    print(string.format("A criatura te deu dano em %s! Dano causado: %d.", playerData.name, damage))
-                    playerData.health = playerData.health - damage
-
+                    if actions.isDoing then
+                        print(string.format("%s desviou do ataque da criatura!", playerData.name))
+                    else
+                        print(string.format("A criatura te deu dano em %s! Dano causado: %d.", playerData.name, damage))
+                        playerData.health = playerData.health - damage
+                    end
                 else
-                    print(string.format("A criatura errou o ataque em %s.", playerData.name))
+                    if actions.isDoing then
+                        print("%s desviou do ataque da criatura!", playerData.name)
+                    else
+                        print(string.format("A criatura errou o ataque em %s.", playerData.name))
+                    end
                 end
 
+                local healthRate = math.floor((playerData.health / playerData.maxHealth) * 10)
                 -- Printar a barra de vida do jogador
                 print(string.format("%s: %s", playerData.name, utils.getProgessbar(healthRate)))
             end
@@ -50,7 +58,9 @@ function krakenActions.build()
             
             execute = function (playerData, creatureData)
 
-                local healthRate = math.floor((playerData.health / playerData.maxHealth) * 10)
+                -- Calcular a chance da porcentagem de sucesso com base na velocidade do jogador e do boss
+                local sucessChance = creatureData.speed == 0 and 1 or creatureData.speed / playerData.speed              
+                local sucess = math.random() <= sucessChance
 
                 -- Calcular o dano com base no ataque do jogador e na defesa do boss
                 local damageRaw = creatureData.attack - math.random() * playerData.defense
@@ -62,9 +72,24 @@ function krakenActions.build()
                 print(string.format("A criatura te deu dano em %s! Dano causado: %d.", playerData.name, damage))
                 playerData.health = playerData.health - damage
                 
+                local healthRate = math.floor((playerData.health / playerData.maxHealth) * 10)
                 -- Printar a barra de vida do jogador
                 print(string.format("%s: %s", playerData.name, utils.getProgessbar(healthRate)))
 
+                if sucess then
+                    if actions.isDoing then
+                        print(string.format("%s desviou do ataque da criatura!", playerData.name))
+                    else
+                        print(string.format("A criatura te deu dano em %s! Dano causado: %d.", playerData.name, damage))
+                        playerData.health = playerData.health - damage
+                    end
+                else
+                    if actions.isDoing then
+                        print(string.format("%s desviou do ataque da criatura!", playerData.name))
+                    else
+                        print("A criatura errou o ataque.")
+                    end  
+                end
             end
         }
 
@@ -76,20 +101,38 @@ function krakenActions.build()
             
             execute = function (playerData, creatureData)
 
+                -- Calcular a chance da porcentagem de sucesso com base na velocidade do jogador e do boss
+                local sucessChance = creatureData.speed == 0 and 1 or creatureData.speed / playerData.speed              
+                local sucess = math.random() <= sucessChance
+
                 -- Calcular o dano com base no ataque do jogador e na defesa do boss
                 local damageRaw = creatureData.attack - math.random() * playerData.defense
 
                 -- Garante que o damage vai ser 1 ou mais
                 local damage = math.max(1, math.ceil(damageRaw * 0.3))
 
-                local healthRate = math.floor((playerData.health / playerData.maxHealth) * 10)
-
                 -- Dar dano
                 print(string.format("A criatura te deu dano em %s! Dano causado: %d.", playerData.name, damage))
                 playerData.health = playerData.health - damage
-
+                
+                local healthRate = math.floor((playerData.health / playerData.maxHealth) * 10)
                 -- Printar a barra de vida do jogador
                 print(string.format("%s: %s", playerData.name, utils.getProgessbar(healthRate)))
+                
+                if sucess then
+                    if actions.isDoing then
+                        print(string.format("%s desviou do ataque da criatura!", playerData.name))
+                    else
+                        print(string.format("A criatura te deu dano em %s! Dano causado: %d.", playerData.name, damage))
+                        playerData.health = playerData.health - damage
+                    end
+                else
+                    if actions.isDoing then
+                        print(string.format("%s desviou do ataque da criatura!", playerData.name))
+                    else
+                        print("A criatura errou o ataque.")    
+                    end
+                end
             end
         }
 
